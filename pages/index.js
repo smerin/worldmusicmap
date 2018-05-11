@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Page from "../layouts/main";
 import Map from "./map";
 import Artist from "./artist";
 const wrapperStyles = {
@@ -7,8 +8,8 @@ const wrapperStyles = {
 };
 
 const artists = [
-  { name: "Test BA name", coords: [-58.3816, -34.6037] },
-  { name: "Test AU name", coords: [151.2093, -33.8688] }
+  { name: "Astor Piazzolla", coords: [-58.3816, -34.6037] },
+  { name: "Fela Kuti", coords: [3.3792, 6.5244] }
 ];
 
 class Index extends Component {
@@ -32,7 +33,7 @@ class Index extends Component {
     console.log(name);
     this.setState({
       center: coords,
-      zoom: 2,
+      zoom: 4,
       selectedArtist: name
     });
   }
@@ -64,31 +65,35 @@ class Index extends Component {
 
   render() {
     return (
-      <div style={wrapperStyles}>
-        <Map
-          controls={false}
-          zoom={this.state.zoom}
-          center={this.state.center}
-          handleZoomIn={this.handleZoomIn}
-          handleZoomOut={this.handleZoomOut}
-          handleReset={this.handleReset}
-        />
+      <Page>
+        <div style={wrapperStyles}>
+          <Map
+            controls={true}
+            zoom={this.state.zoom}
+            center={this.state.center}
+            handleZoomIn={this.handleZoomIn}
+            handleZoomOut={this.handleZoomOut}
+            handleReset={this.handleReset}
+          />
 
-        <div style={{ position: "absolute", top: 0 }}>
-          {artists.map((artist, index) => (
-            <Artist
-              key={index}
-              name={artist.name}
-              coords={artist.coords}
-              handleClick={this.selectArtist}
-            />
-          ))}
+          <div style={{ position: "absolute", top: 10, left: 20 }}>
+            {artists.map((artist, index) => (
+              <Artist
+                key={index}
+                name={artist.name}
+                coords={artist.coords}
+                handleClick={this.selectArtist}
+              />
+            ))}
+          </div>
+
+          {this.state.selectedArtist && (
+            <h1 style={{ position: "absolute", bottom: 5, left: 20 }}>
+              Selected: {this.state.selectedArtist}
+            </h1>
+          )}
         </div>
-
-        {this.state.selectedArtist && (
-          <h1>Selected: {this.state.selectedArtist}</h1>
-        )}
-      </div>
+      </Page>
     );
   }
 }

@@ -10,8 +10,20 @@ import {
 import { Motion, spring } from "react-motion";
 
 const wrapperStyles = {
+  position: "fixed",
+  top: 0,
+  left: 0,
   width: "100%",
-  margin: "0 auto"
+  height: "100%"
+};
+
+const buttonStyle = {
+  margin: 5,
+  padding: "10px 20px",
+  background: "#333",
+  color: "#FFF",
+  border: 0,
+  borderRadius: 0
 };
 
 const cities = [
@@ -29,10 +41,19 @@ class Map extends Component {
     return (
       <div style={wrapperStyles}>
         {this.props.controls && (
-          <div className="map__controls">
-            <button onClick={this.props.handleZoomIn}>{"Zoom in"}</button>
-            <button onClick={this.props.handleZoomOut}>{"Zoom out"}</button>
-            <button onClick={this.props.handleReset}>{"Reset"}</button>
+          <div
+            className="map__controls"
+            style={{ position: "absolute", top: 10, right: 20 }}
+          >
+            <button onClick={this.props.handleZoomIn} style={buttonStyle}>
+              {"Zoom in"}
+            </button>
+            <button onClick={this.props.handleZoomOut} style={buttonStyle}>
+              {"Zoom out"}
+            </button>
+            <button onClick={this.props.handleReset} style={buttonStyle}>
+              {"Reset"}
+            </button>
           </div>
         )}
         <Motion
@@ -50,11 +71,11 @@ class Map extends Component {
           {({ zoom, x, y }) => (
             <ComposableMap
               projectionConfig={{ scale: 205 }}
-              width={980}
-              height={551}
+              // width={980}
+              // height={551}
               style={{
-                width: "100%",
-                height: "auto"
+                width: "100vw",
+                height: "100vh"
               }}
             >
               <ZoomableGroup center={[x, y]} zoom={zoom}>
